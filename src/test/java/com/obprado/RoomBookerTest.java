@@ -18,6 +18,16 @@ public class RoomBookerTest {
         testRooms(roomBooker, new RoomsSet(7, 5), 6, 1054, 4, 189);
     }
 
+    @Test
+    public void shouldNotDowngradePremiumUsersEvenIfThatMeansLoosingThemAsCustomersWhenThereAreEconomyRoomsAvailable() {
+        testRooms(roomBooker, new RoomsSet(2, 7), 2, 583, 4, 189);
+    }
+
+    @Test
+    public void ifThereIsAPremiumRoomLeftItShouldUpgradeTheHighestPayingUser() {
+        testRooms(roomBooker, new RoomsSet(7, 1), 7, 1153, 1, 45);
+    }
+
     private void testRooms(RoomBooker roomBooker, RoomsSet freeRooms,
                            int expectedPremiumGuestCount, int expectedPremiumGuestTotalIncome,
                            int expectedEconomyGuestCount, int expectedEconomyTotalIncome) {
