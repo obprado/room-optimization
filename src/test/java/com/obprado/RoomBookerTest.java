@@ -28,6 +28,31 @@ public class RoomBookerTest {
         testRooms(roomBooker, new RoomsSet(7, 1), 7, 1153, 1, 45);
     }
 
+    @Test
+    public void shouldBookNothingIfTheHotelIsBeingRefurbished() {
+        testRooms(roomBooker, new RoomsSet(0, 0), 0, 0, 0, 0);
+    }
+
+    @Test
+    public void shouldUpgradeEverySingleUserIfNecessary() {
+        testRooms(roomBooker, new RoomsSet(11, 0), 10, 1243, 0, 0);
+    }
+
+    @Test
+    public void shouldLeaveEverySinglePremiumOutWhenTheSuitesAreBeingRefurbished() {
+        testRooms(roomBooker, new RoomsSet(0, 11), 0, 0, 4, 189);
+    }
+
+    @Test
+    public void shouldPutEvery() {
+        testRooms(roomBooker, new RoomsSet(0, 11), 0, 0, 4, 189);
+    }
+
+    @Test
+    public void shouldPutEveryGuestsOnItsBudgetWhenThereArePlentyOfRooms() {
+        testRooms(roomBooker, new RoomsSet(11, 11), 6, 1054, 4, 189);
+    }
+
     private void testRooms(RoomBooker roomBooker, RoomsSet freeRooms,
                            int expectedPremiumGuestCount, int expectedPremiumGuestTotalIncome,
                            int expectedEconomyGuestCount, int expectedEconomyTotalIncome) {
