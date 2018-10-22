@@ -18,7 +18,7 @@ public class RoomBooker {
         UsagesBuilder builder = new UsagesBuilder(freeRooms);
         highEndGuests.limit(freeRooms.freePremiumRooms()).forEach(builder::addPremiumGuest);
 
-        int numberOfUpgradedGuests = Math.min(builder.remainingPremiumRooms(), (int)lowEndGuests().count());
+        int numberOfUpgradedGuests = Math.min(builder.remainingPremiumRooms(), lowEndGuestsOverflow(freeRooms));
         // Low end guests are assigned a premium room if there are rooms left
         lowEndGuests().limit(numberOfUpgradedGuests).forEach(builder::addPremiumGuest);
 
@@ -26,6 +26,10 @@ public class RoomBooker {
         lowEndGuests().skip(numberOfUpgradedGuests).limit(freeRooms.freeEconomyRooms()).forEach(builder::addEconomyGuest);
 
         return builder.build();
+    }
+
+    private int lowEndGuestsOverflow(RoomsSet freeRooms) {
+        return (int)lowEndGuests().count() > freeRooms.freeEconomyRooms() ? (int)lowEndGuests().count() : 0;
     }
 
     private Stream<Integer> lowEndGuests() {

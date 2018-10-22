@@ -5,7 +5,7 @@ public class RoomsSet {
     private int economy;
     private int premium;
 
-    public RoomsSet(int economy, int premium) {
+    public RoomsSet(int premium, int economy) {
         this.economy = economy;
         this.premium = premium;
     }

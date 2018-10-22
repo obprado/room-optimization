@@ -6,16 +6,27 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RoomBookerTest {
 
+    private RoomBooker roomBooker = new RoomBooker(new MockGuestsService());
+
     @Test
-    public void shouldAssignGuestsToRooms() {
-        RoomBooker roomBooker = new RoomBooker(new MockGuestsService());
+    public void shouldAssignGuestsToRoomsWhenTheHotelHasEnoughGuestsForAllRoomsWithoutUpgradingThem() {
+        testRooms(roomBooker, new RoomsSet(3, 3), 3, 738, 3, 167);
+    }
 
-        Usages roomUsages = roomBooker.calculateBookings(new RoomsSet(3, 3));
-        assertThat(roomUsages.premiumGuestsCount()).isEqualTo(3);
-        assertThat(roomUsages.premiumGuestsTotalIncome()).isEqualTo(738);
+    @Test
+    public void shouldNotUpgradeLowEndGuestsIfThereAreEmptyEconomyRooms() {
+        testRooms(roomBooker, new RoomsSet(7, 5), 6, 1054, 4, 189);
+    }
 
-        assertThat(roomUsages.economyGuestsCount()).isEqualTo(3);
-        assertThat(roomUsages.economyGuestsTotalIncome()).isEqualTo(167);
+    private void testRooms(RoomBooker roomBooker, RoomsSet freeRooms,
+                           int expectedPremiumGuestCount, int expectedPremiumGuestTotalIncome,
+                           int expectedEconomyGuestCount, int expectedEconomyTotalIncome) {
+        Usages roomUsages = roomBooker.calculateBookings(freeRooms);
+        assertThat(roomUsages.premiumGuestsCount()).isEqualTo(expectedPremiumGuestCount);
+        assertThat(roomUsages.premiumGuestsTotalIncome()).isEqualTo(expectedPremiumGuestTotalIncome);
+
+        assertThat(roomUsages.economyGuestsCount()).isEqualTo(expectedEconomyGuestCount);
+        assertThat(roomUsages.economyGuestsTotalIncome()).isEqualTo(expectedEconomyTotalIncome);
     }
 
 }
