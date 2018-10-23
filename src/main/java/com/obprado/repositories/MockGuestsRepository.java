@@ -1,10 +1,14 @@
-package com.obprado;
+package com.obprado.repositories;
+
+import com.obprado.core.GuestsRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class MockGuestsService implements GuestsService {
+@Component
+public class MockGuestsRepository implements GuestsRepository {
 
     @Override
     public List<Integer> findGuestsInfo() {

@@ -1,12 +1,16 @@
 package com.obprado;
 
+import com.obprado.core.RoomBooker;
+import com.obprado.core.RoomsSet;
+import com.obprado.core.Usages;
+import com.obprado.repositories.MockGuestsRepository;
 import org.junit.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RoomBookerTest {
 
-    private RoomBooker roomBooker = new RoomBooker(new MockGuestsService());
+    private RoomBooker roomBooker = new RoomBooker(new MockGuestsRepository());
 
     @Test
     public void shouldAssignGuestsToRoomsWhenTheHotelHasEnoughGuestsForAllRoomsWithoutUpgradingThem() {

@@ -1,4 +1,4 @@
-package com.obprado;
+package com.obprado.core;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
-package com.obprado;
+package com.obprado.core;
 
 import java.util.List;
 
-public interface GuestsService {
+public interface GuestsRepository {
 
     List<Integer> findGuestsInfo();
 }

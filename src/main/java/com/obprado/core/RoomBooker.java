@@ -1,14 +1,17 @@
-package com.obprado;
+package com.obprado.core;
+
+import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.stream.Stream;
 
+@Component
 public class RoomBooker {
     public static final int HIGH_END_BUDGET_THRESHOLD = 100;
-    private GuestsService guestsService;
+    private GuestsRepository guestsRepository;
 
-    public RoomBooker(GuestsService guestsService) {
-        this.guestsService = guestsService;
+    public RoomBooker(GuestsRepository guestsRepository) {
+        this.guestsRepository = guestsRepository;
     }
 
     public Usages calculateBookings(RoomsSet freeRooms) {
@@ -37,7 +40,7 @@ public class RoomBooker {
     }
 
     private Stream<Integer> sortedGuests() {
-        return this.guestsService.findGuestsInfo().stream().sorted(Comparator.reverseOrder());
+        return this.guestsRepository.findGuestsInfo().stream().sorted(Comparator.reverseOrder());
     }
 
     public boolean highEnd(int guestBudget) {

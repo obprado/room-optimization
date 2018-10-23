@@ -1,4 +1,4 @@
-package com.obprado;
+package com.obprado.core;
 
 public class RoomsSet {
 
